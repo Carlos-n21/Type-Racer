@@ -48,9 +48,19 @@ body {
   background-color: rgb(170, 170, 170);
 }
 
+/* Custom CSS for the sentence label */
 .sentence-label {
-  border: 1px solid #646464;
+  border: 1px solid #000; /* Add a black border */
   padding: 5px;
   border-radius: 5px;
   width: 90%;
+  margin: 10px 0; /* Add vertical margin */
+}
+
+/* Custom CSS for the button */
+.custom-btn {
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #ff8400;
+  margin-left: 5px;
 }
