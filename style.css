@@ -45,5 +45,12 @@ body {
 }
 
 .col-form-label {
-  background-color: #acacac;
+  background-color: rgb(170, 170, 170);
+}
+
+.sentence-label {
+  border: 1px solid #646464;
+  padding: 5px;
+  border-radius: 5px;
+  width: 90%;
 }
