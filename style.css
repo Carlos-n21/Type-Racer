@@ -7,19 +7,40 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+/* Container styling */
 .container-fluid {
   background-color: #ff8400;
   padding: 20px;
 }
 
+/* Heading style */
 .container-fluid h1 {
   font-family: 'Alegreya', serif;
   color: #fff;
 }
 
+/* Button style */
 .container-fluid .btn-light {
   color: #000;
   background-color: #fff;
   border: none;
   font-weight: 500;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+/* Form style */
+.form-group {
+  background-color: #d3d3d3c9;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group .col-auto {
+  margin-right: 10px;
 }
