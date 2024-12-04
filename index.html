@@ -37,15 +37,15 @@
             <label for="typingTest" class="col-auto">Test your typing speed by typing the text shown below:</label>
         </div>
         <div class="form-group row justify-content-center align-items-center mt-3">
-            <label for="sentenceToType" class="col-auto sentence-label">The quick brown fox jumps over the lazy dog.</label>
+            <label for="sentenceToType" class="col-auto sentence-label" id="sentenceToType">The quick brown fox jumps over the lazy dog.</label>
         </div>
         <div class="form-group row justify-content-center align-items-center mt-3">
             <input type="text" class="form-control col-auto" id="userInput" placeholder="Type here...">
         </div>
         <div class="form-group row justify-content-center align-items-center mt-3">
-            <button type="button" class="btn custom-btn">Start</button>
-            <button type="button" class="btn custom-btn ml-2">Stop</button>
-            <button type="button" class="btn custom-btn ml-2">Retry</button>
+            <button type="button" class="btn custom-btn" id="startButton">Start</button>
+            <button type="button" class="btn custom-btn ml-2" id="stopButton">Stop</button>
+            <button type="button" class="btn custom-btn ml-2" id="retryButton">Retry</button>
         </div>
         <div class="results-container mt-3 p-3">
             <h3>Results</h3>
@@ -79,5 +79,88 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startButton = document.getElementById('startButton');
+            const stopButton = document.getElementById('stopButton');
+            const retryButton = document.getElementById('retryButton');
+            const userInput = document.getElementById('userInput');
+            const resultLevel = document.getElementById('resultLevel');
+            const resultTime = document.getElementById('resultTime');
+            const resultWPM = document.getElementById('resultWPM');
+            const difficultySelect = document.getElementById('difficultySelect');
+            const sentenceToType = document.getElementById('sentenceToType');
+
+            let startTime;
+
+            const sentences = {
+                Easy: [
+                    "The cat sleeps.",
+                    "A dog barks.",
+                    "Birds fly high.",
+                    "Fish swim fast.",
+                    "The sun shines."
+                ],
+                Normal: [
+                    "The quick brown fox jumps over the lazy dog.",
+                    "A journey of a thousand miles begins with a single step.",
+                    "To be or not to be, that is the question.",
+                    "All that glitters is not gold.",
+                    "Actions speak louder than words."
+                ],
+                Intermediate: [
+                    "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+                    "The only limit to our realization of tomorrow is our doubts of today.",
+                    "The purpose of our lives is to be happy.",
+                    "Life is what happens when you're busy making other plans.",
+                    "Get busy living or get busy dying."
+                ],
+                Hard: [
+                    "In the end, it's not the years in your life that count. It's the life in your years.",
+                    "You have within you right now, everything you need to deal with whatever the world can throw at you.",
+                    "Believe you can and you're halfway there.",
+                    "The only impossible journey is the one you never begin.",
+                    "Life is short, and it's up to you to make it sweet."
+                ]
+            };
+
+            <!-- Function to update the sentence based on the selected difficulty level -->
+            function updateSentence() {
+                const selectedDifficulty = difficultySelect.value;
+                const randomSentence = sentences[selectedDifficulty][Math.floor(Math.random() * sentences[selectedDifficulty].length)];
+                sentenceToType.textContent = randomSentence;
+            }
+
+            difficultySelect.addEventListener('change', updateSentence);
+
+            startButton.addEventListener('click', function() {
+                userInput.focus();
+                startTime = new Date();
+            });
+
+            stopButton.addEventListener('click', function() {
+                const endTime = new Date();
+                const timeTaken = (endTime - startTime) / 1000; // time in seconds
+                const wordsTyped = userInput.value.split(' ').length;
+                const wpm = (wordsTyped / timeTaken) * 60;
+
+                const selectedDifficulty = difficultySelect.value;
+                resultLevel.textContent = selectedDifficulty;
+                resultTime.textContent = timeTaken.toFixed(2) + ' sec';
+                resultWPM.textContent = wpm.toFixed(2) + ' WPM';
+            });
+
+            retryButton.addEventListener('click', function() {
+                updateSentence();
+                userInput.value = '';
+                userInput.focus();
+            });
+
+            // Initialize with a sentence based on the default difficulty level
+            updateSentence();
+        });
+    </script>
 </body>
 </html>
