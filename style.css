@@ -33,7 +33,6 @@ body {
 
 /* Form style */
 .form-group {
-  background-color: #d3d3d3c9;
   padding: 10px;
   border-radius: 5px;
   display: flex;
@@ -42,5 +41,9 @@ body {
 }
 
 .form-group .col-auto {
-  margin-right: 10px;
+  margin-right: -15px;
+}
+
+.col-form-label {
+  background-color: #acacac;
 }
