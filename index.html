@@ -97,7 +97,6 @@
             const resultWPM = document.getElementById('resultWPM');
             const difficultySelect = document.getElementById('difficultySelect');
             const sentenceToType = document.getElementById('sentenceToType');
-            const accuracyFeedback = document.getElementById('accuracyFeedback');
 
             let startTime;
             let isStarted = false;
@@ -143,21 +142,21 @@
             function updateSentenceColor() {
                 const original = sentenceToType.textContent;
                 const typed = userInput.value;
-                if (original.startsWith(typed)) {
-                    sentenceToType.style.color = 'blue';
-                } else {
-                    sentenceToType.style.color = 'red';
-                }
-            }
+                let coloredText = '';
 
-            function calculateAccuracy(original, typed) {
-                let correctChars = 0;
-                for (let i = 0; i < typed.length; i++) {
-                    if (typed[i] === original[i]) {
-                        correctChars++;
+                for (let i = 0; i < original.length; i++) {
+                    if (i < typed.length) {
+                        if (typed[i] === original[i]) {
+                            coloredText += `<span style="color: blue;">${original[i]}</span>`;
+                        } else {
+                            coloredText += `<span style="color: red;">${original[i]}</span>`;
+                        }
+                    } else {
+                        coloredText += original[i];
                     }
                 }
-                return (correctChars / original.length) * 100;
+
+                sentenceToType.innerHTML = coloredText;
             }
 
             difficultySelect.addEventListener('change', updateSentence);
@@ -181,9 +180,6 @@
                     resultLevel.textContent = selectedDifficulty;
                     resultTime.textContent = timeTaken.toFixed(2) + ' sec';
                     resultWPM.textContent = wpm.toFixed(2) + ' WPM';
-
-                    const accuracy = calculateAccuracy(sentenceToType.textContent, userInput.value);
-                    accuracyFeedback.textContent = accuracy.toFixed(2) + '%';
 
                     isStarted = false;
                 }
