@@ -22,36 +22,42 @@
     </div>
 
     <div class="container text-center mt-3">
-        <div class="form-group row justify-content-center align-items-center">
-            <label for="difficultySelect" class="col-auto col-form-label">Select Difficulty</label>
-            <div class="col-auto">
-                <select class="form-control" id="difficultySelect">
-                    <option>Easy</option>
-                    <option>Normal</option>
-                    <option>Intermediate</option>
-                    <option>Hard</option>
-                </select>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group row justify-content-center align-items-center">
+                    <label for="difficultySelect" class="col-auto col-form-label">Select Difficulty</label>
+                    <div class="col-auto">
+                        <select class="form-control" id="difficultySelect">
+                            <option>Easy</option>
+                            <option>Normal</option>
+                            <option>Intermediate</option>
+                            <option>Hard</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center align-items-center mt-3">
+                    <label for="typingTest" class="col-auto">Test your typing speed by typing the text shown below:</label>
+                </div>
+                <div class="form-group row justify-content-center align-items-center mt-3">
+                    <label for="sentenceToType" class="col-auto sentence-label" id="sentenceToType">The quick brown fox jumps over the lazy dog.</label>
+                </div>
+                <div class="form-group row justify-content-center align-items-center mt-3">
+                    <input type="text" class="form-control col-auto" id="userInput" placeholder="Type here...">
+                </div>
+                <div class="form-group row justify-content-center align-items-center mt-3">
+                    <button type="button" class="btn custom-btn" id="startButton">Start</button>
+                    <button type="button" class="btn custom-btn ml-2" id="stopButton">Stop</button>
+                    <button type="button" class="btn custom-btn ml-2" id="retryButton">Retry</button>
+                </div>
             </div>
-        </div>
-        <div class="form-group row justify-content-center align-items-center mt-3">
-            <label for="typingTest" class="col-auto">Test your typing speed by typing the text shown below:</label>
-        </div>
-        <div class="form-group row justify-content-center align-items-center mt-3">
-            <label for="sentenceToType" class="col-auto sentence-label" id="sentenceToType">The quick brown fox jumps over the lazy dog.</label>
-        </div>
-        <div class="form-group row justify-content-center align-items-center mt-3">
-            <input type="text" class="form-control col-auto" id="userInput" placeholder="Type here...">
-        </div>
-        <div class="form-group row justify-content-center align-items-center mt-3">
-            <button type="button" class="btn custom-btn" id="startButton">Start</button>
-            <button type="button" class="btn custom-btn ml-2" id="stopButton">Stop</button>
-            <button type="button" class="btn custom-btn ml-2" id="retryButton">Retry</button>
-        </div>
-        <div class="results-container mt-3 p-3">
-            <h3>Results</h3>
-            <p>Level: <span id="resultLevel"></span></p>
-            <p>Time: <span id="resultTime"></span></p>
-            <p>WPM: <span id="resultWPM"></span></p>
+            <div class="col-md-4">
+                <div class="results-container mt-3 p-3">
+                    <h3>Results</h3>
+                    <p>Level: <span id="resultLevel"></span></p>
+                    <p>Time: <span id="resultTime"></span></p>
+                    <p>WPM: <span id="resultWPM"></span></p>
+                </div>
+            </div>
         </div>
     </div>
 
