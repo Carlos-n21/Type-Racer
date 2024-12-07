@@ -49,10 +49,6 @@
                 <div class="form-group row justify-content-center align-items-center mt-3">
                     <button type="button" class="btn custom-btn" id="retryButton">Retry</button>
                 </div>
-                <div class="form-group row justify-content-center align-items-center mt-3">
-                    <p>Accuracy: <span id="accuracyFeedback">0%</span></p>
-                </div>
-               
             </div>
             <!-- Results container -->
             <div class="col-md-4">
@@ -141,6 +137,17 @@
                 const selectedDifficulty = difficultySelect.value;
                 const randomSentence = sentences[selectedDifficulty][Math.floor(Math.random() * sentences[selectedDifficulty].length)];
                 sentenceToType.textContent = randomSentence;
+                sentenceToType.style.color = 'black'; // Reset color to black
+            }
+
+            function updateSentenceColor() {
+                const original = sentenceToType.textContent;
+                const typed = userInput.value;
+                if (original.startsWith(typed)) {
+                    sentenceToType.style.color = 'blue';
+                } else {
+                    sentenceToType.style.color = 'red';
+                }
             }
 
             function calculateAccuracy(original, typed) {
@@ -160,6 +167,7 @@
                     startTime = new Date();
                     isStarted = true;
                 }
+                updateSentenceColor();
             });
 
             userInput.addEventListener('keydown', function(event) {
