@@ -46,15 +46,13 @@
                 <div class="form-group row justify-content-center align-items-center mt-3">
                     <input type="text" class="form-control col-auto" id="userInput" placeholder="Type here...">
                 </div>
-                <!-- Start, Stop, Retry buttons -->
                 <div class="form-group row justify-content-center align-items-center mt-3">
-                    <button type="button" class="btn custom-btn" id="startButton">Start</button>
-                    <button type="button" class="btn custom-btn ml-2" id="stopButton">Stop</button>
-                    <button type="button" class="btn custom-btn ml-2" id="retryButton">Retry</button>
+                    <button type="button" class="btn custom-btn" id="retryButton">Retry</button>
                 </div>
                 <div class="form-group row justify-content-center align-items-center mt-3">
                     <p>Accuracy: <span id="accuracyFeedback">0%</span></p>
                 </div>
+               
             </div>
             <!-- Results container -->
             <div class="col-md-4">
@@ -96,8 +94,6 @@
     <!-- Custom JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const startButton = document.getElementById('startButton');
-            const stopButton = document.getElementById('stopButton');
             const retryButton = document.getElementById('retryButton');
             const userInput = document.getElementById('userInput');
             const resultLevel = document.getElementById('resultLevel');
@@ -105,8 +101,10 @@
             const resultWPM = document.getElementById('resultWPM');
             const difficultySelect = document.getElementById('difficultySelect');
             const sentenceToType = document.getElementById('sentenceToType');
+            const accuracyFeedback = document.getElementById('accuracyFeedback');
 
             let startTime;
+            let isStarted = false;
 
             const sentences = {
                 Easy: [
@@ -139,36 +137,55 @@
                 ]
             };
 
-            <!-- Function to update the sentence based on the selected difficulty level -->
             function updateSentence() {
                 const selectedDifficulty = difficultySelect.value;
                 const randomSentence = sentences[selectedDifficulty][Math.floor(Math.random() * sentences[selectedDifficulty].length)];
                 sentenceToType.textContent = randomSentence;
             }
 
+            function calculateAccuracy(original, typed) {
+                let correctChars = 0;
+                for (let i = 0; i < typed.length; i++) {
+                    if (typed[i] === original[i]) {
+                        correctChars++;
+                    }
+                }
+                return (correctChars / original.length) * 100;
+            }
+
             difficultySelect.addEventListener('change', updateSentence);
 
-            startButton.addEventListener('click', function() {
-                userInput.focus();
-                startTime = new Date();
+            userInput.addEventListener('input', function() {
+                if (!isStarted) {
+                    startTime = new Date();
+                    isStarted = true;
+                }
             });
 
-            stopButton.addEventListener('click', function() {
-                const endTime = new Date();
-                const timeTaken = (endTime - startTime) / 1000; // time in seconds
-                const wordsTyped = userInput.value.split(' ').length;
-                const wpm = (wordsTyped / timeTaken) * 60;
+            userInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    const endTime = new Date();
+                    const timeTaken = (endTime - startTime) / 1000; // time in seconds
+                    const wordsTyped = userInput.value.split(' ').length;
+                    const wpm = (wordsTyped / timeTaken) * 60;
 
-                const selectedDifficulty = difficultySelect.value;
-                resultLevel.textContent = selectedDifficulty;
-                resultTime.textContent = timeTaken.toFixed(2) + ' sec';
-                resultWPM.textContent = wpm.toFixed(2) + ' WPM';
+                    const selectedDifficulty = difficultySelect.value;
+                    resultLevel.textContent = selectedDifficulty;
+                    resultTime.textContent = timeTaken.toFixed(2) + ' sec';
+                    resultWPM.textContent = wpm.toFixed(2) + ' WPM';
+
+                    const accuracy = calculateAccuracy(sentenceToType.textContent, userInput.value);
+                    accuracyFeedback.textContent = accuracy.toFixed(2) + '%';
+
+                    isStarted = false;
+                }
             });
 
             retryButton.addEventListener('click', function() {
                 updateSentence();
                 userInput.value = '';
                 userInput.focus();
+                isStarted = false;
             });
 
             // Initialize with a sentence based on the default difficulty level
